@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FaiWanoTillTheeEnds</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">
+            <span class="highlight-sky">Fai</span>
+            <span class="highlight-pink">Wano</span>
+            TillTheeEnds
+        </h1>
+        <p class="slogan">Our Bond and Promises To Each Other Will Never Be Broken</p>
+        <p class="quote">You are my heart, my life, my one and only thought.</p>
+        <p class="quote-2">I belong to my beloved, and my beloved is mine.</p>
+        <p class="quote-3">Till death do us apart.</p>
+        
+        <div class="timer" id="elapsedTime">00d 00h 00m 00s</div>
+        
+        <div class="tracker">
+            <h2>Add New Activity</h2>
+            <input type="text" id="activity" placeholder="Activity Name" required>
+            <input type="number" id="time" placeholder="Time (in minutes)" required>
+            <button onclick="addActivity()">Add Activity</button>
+        </div>
+        <h2>Tracked Activities</h2>
+        <ul id="activityList"></ul>
+    </div>
+
+    <!-- Floating hearts container -->
+    <div id="hearts-container"></div>
+
+    <!-- Floating words -->
+    <div class="floating-word sky-blue">FaithieBear</div>
+    <div class="floating-word pink">Kutlwibear</div>
+    <div class="floating-word sky-blue">Mr Faithie</div>
+    <div class="floating-word pink">Mrs Faithie</div>
+    <div class="floating-word sky-blue">MiEternity</div>
+    <div class="floating-word pink">MiAmour</div>
+    <div class="floating-word sky-blue">BabyBoo</div>
+
+    <div class="floating-image"></div>
+    <div class="floating-image"></div>
+    <script src="script.js"></script>
+</body>
+</html>
+body {
+    font-weight: bold; /* Makes all text bold */
+    margin: 0;
+    padding: 0;
+    background: #f0f0f0; /* Light background for visibility */
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+.main-title {
+    font-size: 48px; /* Title font size */
+}
+
+.highlight-sky {
+    color: skyblue;
+    background-color: rgba(135, 206, 250, 0.5); /* Highlight */
+}
+
+.highlight-pink {
+    color: pink;
+    background-color: rgba(255, 182, 193, 0.5); /* Highlight */
+}
+
+.slogan {
+    font-size: 24px; /* Slogan font size */
+}
+
+.quote, .quote-2, .quote-3 {
+    font-size: 20px; /* Font size for quotes */
+    color: #777; /* Gray color for the text */
+    margin-top: 10px; /* Space above quotes */
+    font-style: italic; /* Italicize for emphasis */
+    padding: 10px; /* Padding for visual spacing */
+}
+
+.timer {
+    font-size: 36px; /* Increase font size for digital look */
+    font-family: 'Courier New', Courier, monospace; /* Use a monospaced font */
+    text-align: center; /* Center align the timer */
+    margin: 20px 0; /* Margin for spacing */
+    padding: 10px; /* Padding for internal spacing */
+    border: 4px solid transparent; /* Initial border */
+    border-radius: 10px; /* Rounded corners */
+    background-color: rgba(255, 255, 255, 0.8); /* Slight background for readability */
+    box-shadow: 0 0 5px skyblue, 0 0 10px skyblue, 0 0 15px pink, 0 0 20px pink; /* Neon glow */
+    position: relative; /* For pseudo-elements */
+}
+
+.timer::before {
+    content: '';
+    position: absolute;
+    top: -4px; /* Adjust for neon border effect */
+    left: -4px; /* Adjust for neon border effect */
+    right: -4px; /* Adjust for neon border effect */
+    bottom: -4px; /* Adjust for neon border effect */
+    background: linear-gradient(45deg, skyblue, pink); /* Gradient border */
+    border-radius: 10px; /* Match border radius */
+    z-index: -1; /* Send behind the timer */
+}
+
+#hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Prevent interaction */
+}
+
+.heart {
+    position: absolute;
+    width: 30px; /* Size of hearts */
+    height: 30px; /* Size of hearts */
+    background: red; /* Base color */
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* Heart shape */
+    opacity: 0.8; /* Semi-transparent */
+    animation: float 10s ease-in infinite; /* Animation for floating */
+}
+
+/* Floating animation */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-20px);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.floating-word {
+    position: absolute;
+    animation: float 10s linear infinite;
+    font-size: 24px; /* Font size for floating words */
+    opacity: 0.7; /* Semi-transparent */
+}
+
+.floating-image {
+    /* Add any styles for floating images if needed */
+}
+function createHeart(color) {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.backgroundColor = color;
+
+    // Randomize position
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.bottom = '-30px'; // Start just below the screen
+
+    document.getElementById('hearts-container').appendChild(heart);
+
+    // Animate the heart's ascent
+    setTimeout(() => {
+        heart.style.animation = 'float 10s ease-in infinite';
+        heart.style.bottom = '100%'; // Move up to the top
+    }, 100);
+
+    // Remove the heart after the animation
+    setTimeout(() => {
+        heart.remove();
+    }, 10000); // Match the duration of the animation
+}
+
+// Create hearts on page load
+window.onload = function() {
+    for (let i = 0; i < 10; i++) {
+        createHeart('skyblue');
+        createHeart('pink');
+    }
+};
+
+function addActivity() {
+    const activity = document.getElementById('activity').value;
+    const time = document.getElementById('time').value;
+
+    if (activity && time) {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${activity} - ${time} minutes`;
+        document.getElementById('activityList').appendChild(listItem);
+        document.getElementById('activity').value = '';
+        document.getElementById('time').value = '';
+    }
+}
+
+// Add your timer logic here as needed
